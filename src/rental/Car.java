@@ -60,4 +60,9 @@ public class Car {
         // equals-method for Reservation is required!
         reservations.remove(reservation);
     }
+    
+    public List<Reservation> getAllReservations(){
+    	//TODO: make a copy of this list so that it isn't changeable by the client
+    	return reservations;
+    }
 }

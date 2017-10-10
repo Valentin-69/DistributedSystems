@@ -125,9 +125,8 @@ public class Client extends AbstractTestBooking {
 	 */
 	@Override
 	protected List<Reservation> getReservationsByRenter(String clientName) throws Exception {
-		// TODO Auto-generated method stub
-		System.out.println("todo for afterwards");
-		return null;
+		System.out.println("getting reservations by renter");
+		return stub.getReservationsByRenter(clientName);
 	}
 
 	/**
@@ -142,8 +141,6 @@ public class Client extends AbstractTestBooking {
 	 */
 	@Override
 	protected int getNumberOfReservationsForCarType(String carType) throws Exception {
-		// TODO Auto-generated method stub
-		System.out.println("todo for afterwards");
-		return 0;
+		return stub.getNumberOfReservationsForCarType(carType);
 	}
 }

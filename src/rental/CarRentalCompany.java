@@ -1,5 +1,7 @@
 package rental;
 
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,8 +10,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class CarRentalCompany implements ICarRentalCompany {
 
@@ -178,6 +183,34 @@ public class CarRentalCompany implements ICarRentalCompany {
 			}
 		}
 		return out.toString();
+	}
+
+
+	@Override
+	public List<Reservation> getReservationsByRenter(String clientName) {
+		ArrayList<Reservation> result = new ArrayList<>();
+		for (Car car : cars) {
+			result.addAll(car.getAllReservations().stream()
+					.filter( t -> t.getCarRenter().equals(clientName))
+					.collect(Collectors.toList()));
+		}
+		return result;
+	}
+
+
+	@Override
+	public int getNumberOfReservationsForCarType(String carType)
+			throws RemoteException {
+		
+		int result = 0;
+		List<Car> filteredCars=cars.stream()
+				.filter( t -> t.getType().getName().equals(carType))
+				.collect(Collectors.toList());
+		for (Car car : filteredCars) {
+			result+=car.getAllReservations().size();
+		}
+
+		return result;
 	}
 	
 }

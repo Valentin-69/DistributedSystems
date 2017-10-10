@@ -51,4 +51,5 @@ public class Reservation extends Quote {
 			return false;
 		return true;
 	}
+	
 }
