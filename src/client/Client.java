@@ -64,8 +64,6 @@ public class Client extends AbstractTestBooking {
 	@Override
 	protected void checkForAvailableCarTypes(Date start, Date end) throws Exception {
 		Set<CarType> response = stub.getAvailableCarTypes(start, end);
-//		System.out.println("available cars between "+start+" and "+end+ " : ");
-//		System.out.println("\t"+response);
 	}
 
 	/**
@@ -89,9 +87,7 @@ public class Client extends AbstractTestBooking {
 	@Override
 	protected Quote createQuote(String clientName, Date start, Date end,
 			String carType, String region) throws Exception {
-//		System.out.println("creating Quote with: "+clientName+" , "+start+" , "+end+" , "+carType+" , "+region);
 		Quote result = stub.createQuote(new ReservationConstraints(start, end, carType, region), name );
-//		System.out.println("\t resulting quote: "+result);
 		return result;
 	}
 
@@ -107,9 +103,7 @@ public class Client extends AbstractTestBooking {
 	 */
 	@Override
 	protected Reservation confirmQuote(Quote quote) throws Exception {
-//		System.out.println("confirming this quote: "+quote);
 		Reservation result = stub.confirmQuote(quote);
-//		System.out.println("\t resulting reservation: "+result);
 		return result;
 	}
 	
@@ -125,7 +119,6 @@ public class Client extends AbstractTestBooking {
 	 */
 	@Override
 	protected List<Reservation> getReservationsByRenter(String clientName) throws Exception {
-		System.out.println("getting reservations by renter");
 		return stub.getReservationsByRenter(clientName);
 	}
 
