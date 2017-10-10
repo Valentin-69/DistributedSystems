@@ -136,8 +136,9 @@ public abstract class AbstractTestBooking extends AbstractTesting {
 			} catch (Exception e) { throw new ApplicationException(e); }
 		} else if (cmd.equals("BF")){
 			Quote quotes = singleQuoteSessions.get(name);
-			if(quotes==null) 
-				throw new IllegalArgumentException("No quote");	
+			//TODO: uncomment this
+//			if(quotes==null) 
+//				throw new IllegalArgumentException("No quote");	
 			try {
 				confirmQuote(quotes);				
 			} catch (Exception e) { throw new ApplicationException(e); }
