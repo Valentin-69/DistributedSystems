@@ -1,7 +1,6 @@
 package agency;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 
 import rental.RentalServer;
 import rental.serializable.ReservationException;
@@ -11,36 +10,9 @@ import rental.serializable.ReservationException;
  */
 public class StartAgencyAndCompanies {
 
-	public static void main(String[] args){
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				try {
-					AgencyServer.main(null);
-				} catch (RemoteException e) {
-					e.printStackTrace();
-				}
-			}
-			
-		}).start();
-		
-		
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				try {
-					RentalServer.main(null);
-				} catch (NumberFormatException e) {
-					e.printStackTrace();
-				} catch (ReservationException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}).start();
+	public static void main(String[] args) throws NumberFormatException, ReservationException, IOException{
+		AgencyServer.main(null);
+		RentalServer.main(null);
 	}
 	
 }

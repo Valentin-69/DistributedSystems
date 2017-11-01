@@ -65,7 +65,6 @@ public class Car {
     }
     
     public List<Reservation> getAllReservations(){
-    	//TODO: make a copy of this list so that it isn't changeable by the client
     	return reservations;
     }
 }

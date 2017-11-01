@@ -1,5 +1,6 @@
 package agency;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Set;
 
@@ -10,10 +11,12 @@ public class ManagerSession implements ManagerSessionRemote {
 	
 	private final AgencyManager agency;
 	private final String managerName;
+	private final String id;
 	
-	public ManagerSession(AgencyManager agency, String managerName) {
+	public ManagerSession(AgencyManager agency, String managerName, String id) {
 		this.agency=agency;
 		this.managerName=managerName;
+		this.id = id;
 	}
 
 	@Override
@@ -34,20 +37,26 @@ public class ManagerSession implements ManagerSessionRemote {
 	@Override
 	public int getNumberOfReservationsForCarType(String carRentalName, String carType)
 			throws RemoteException {
-		// TODO Auto-generated method stub
-		return 0;
+		return agency.getNumberOfReservationsForCarType(carRentalName, carType);
 	}
 
 	@Override
-	public Set<String> getBestClients(ManagerSessionRemote ms) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<String> getBestClients() throws RemoteException {
+		return agency.getBestClients();
 	}
 
 	@Override
 	public CarType getMostPopularCarTypeIn(String carRentalCompanyName, int year) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return agency.getMostPopularCarTypeIn(carRentalCompanyName,year);
+	}
+
+	public String getID() {
+		return id;
+	}
+
+	@Override
+	public void terminate() throws RemoteException {
+		agency.stopSession(this);
 	}
 
 }

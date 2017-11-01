@@ -2,13 +2,16 @@ package rental;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -137,7 +140,6 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 		logger.log(Level.INFO, "<{0}> Creating tentative reservation for {1} with constraints {2}", 
                         new Object[]{name, client, constraints.toString()});
 		
-				
 		if(!regions.contains(constraints.getRegion()) || !isAvailable(constraints.getCarType(), constraints.getStartDate(), constraints.getEndDate()))
 			throw new ReservationException("<" + name
 				+ "> No cars available to satisfy the given constraints.");
@@ -155,7 +157,7 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 						/ (1000 * 60 * 60 * 24D));
 	}
 
-	public Reservation confirmQuote(Quote quote) throws ReservationException {
+	public synchronized Reservation confirmQuote(Quote quote) throws ReservationException {
 		logger.log(Level.INFO, "<{0}> Reservation of {1}", new Object[]{name, quote.toString()});
 		List<Car> availableCars = getAvailableCars(quote.getCarType(), quote.getStartDate(), quote.getEndDate());
 		if(availableCars.isEmpty())
@@ -220,9 +222,41 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 
 
 	@Override
-	public CarType getCheapestCarType(Date start, Date end, String region) throws RemoteException {
-		//TODO: implement
-		throw new IllegalStateException("not yet implemented");
+	public HashMap<String,Integer> getClientToNbOfReservationsMap() {
+		HashMap<String,Integer> result = new HashMap<String, Integer>();
+	    for(Car car: cars){
+	    	for(Reservation res: car.getAllReservations()){
+	    		result.put(res.getCarRenter(), result.getOrDefault(res.getCarRenter(), 0)+1);
+	    	}
+	    }
+	    return result;
 	}
-	
+
+
+	@Override
+	public CarType getMostPopularCarTypeIn(int year) {
+		Calendar temp = Calendar.getInstance();
+		temp.set(year, 0, 0, 0, 0);
+		Date beginOfYear = temp.getTime();
+		temp.add(Calendar.YEAR, 1);
+		Date endOfYear = temp.getTime();
+		
+		HashMap<String, Integer> carTypeToResInYear = new HashMap<>(); 
+		for(Car car: cars){
+			for(Reservation res: car.getAllReservations()){
+				if(res.getStartDate().after(beginOfYear) && res.getStartDate().before(endOfYear)){
+					carTypeToResInYear.put(res.getCarType(), carTypeToResInYear.getOrDefault(res.getCarType(), 0)+1);
+				}
+			}
+		}
+		
+		return getCarType(carTypeToResInYear.entrySet().stream().max(new Comparator<Entry<String,Integer>>() {
+
+			@Override
+			public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
+				return Integer.compare(o1.getValue(), o2.getValue());
+			}
+		}).orElse(null).getKey());
+	}
+
 }
