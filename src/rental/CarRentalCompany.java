@@ -10,13 +10,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class CarRentalCompany implements ICarRentalCompany {
+import rental.remote.CarRentalCompanyRemote;
+import rental.remote.Reservation;
+import rental.serializable.CarType;
+import rental.serializable.Quote;
+import rental.serializable.ReservationConstraints;
+import rental.serializable.ReservationException;
+
+public class CarRentalCompany implements CarRentalCompanyRemote {
 
 	private static Logger logger = Logger.getLogger(CarRentalCompany.class.getName());
 	
@@ -211,6 +216,13 @@ public class CarRentalCompany implements ICarRentalCompany {
 		}
 
 		return result;
+	}
+
+
+	@Override
+	public CarType getCheapestCarType(Date start, Date end, String region) throws RemoteException {
+		//TODO: implement
+		throw new IllegalStateException("not yet implemented");
 	}
 	
 }

@@ -11,16 +11,25 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import rental.remote.CarRentalCompanyRemote;
+import rental.serializable.CarType;
+import rental.serializable.ReservationException;
+
 public class RentalServer {
 	
 	public static void main(String[] args) throws ReservationException,
 			NumberFormatException, IOException {
-		CrcData data  = loadData("hertz.csv");
-		CarRentalCompany company = new CarRentalCompany(data.name, data.regions, data.cars);
 		
-		ICarRentalCompany stub = (ICarRentalCompany) UnicastRemoteObject.exportObject(company, 0);
-		Registry registry = LocateRegistry.getRegistry();
-		registry.rebind("Hertz", stub);
+		for (String csvName : new String[] {"Hertz.csv","Dockx.csv"}) {
+			
+			CrcData data  = loadData(csvName);
+			CarRentalCompany company = new CarRentalCompany(data.name, data.regions, data.cars);
+			
+			CarRentalCompanyRemote stub = (CarRentalCompanyRemote) UnicastRemoteObject.exportObject(company, 0);
+			Registry registry = LocateRegistry.getRegistry();
+			registry.rebind(csvName.substring(0, csvName.indexOf(".")), stub);
+		}		
+		
 
 	}
 

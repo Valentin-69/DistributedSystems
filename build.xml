@@ -1,5 +1,5 @@
-<project name="RMI1" default="run" basedir=".">
-  <description>This is build/run script for the RMI1 assignment. </description>
+<project name="RMI2" default="run" basedir=".">
+  <description>This is build/run script for the RMI2/3 assignment. </description>
 
   <property name="src" location="src"/>
   <property name="build" location="bin"/>
@@ -15,9 +15,9 @@
 	            => Package: client Classname: Client
 	   The third parameter is filename for the final zip.	   
     ******************************************************** -->
-  <property name="main.client" value="client.Client" />
-  <property name="main.server" value="rental.RentalServer" />
-  <property name="zip.filename" value="rmi1" />
+  <property name="main.client" value="client.Main" />
+  <property name="main.server" value="agency.StartAgencyAndCompanies" />
+  <property name="zip.filename" value="rmi2" />
   <!--
     ********************************************************
        Please DO NOT CHANGE any code below this line.
@@ -85,4 +85,5 @@
   
   <target name="run" depends="compile,registry.start,run.both,registry.stop"/>
   <target name="run-wo-compile" depends="registry.start,run.both,registry.stop" />
+  
 </project>

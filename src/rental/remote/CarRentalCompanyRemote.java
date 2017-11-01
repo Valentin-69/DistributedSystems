@@ -1,4 +1,4 @@
-package rental;
+package rental.remote;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -6,7 +6,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public interface ICarRentalCompany extends Remote {
+import rental.serializable.CarType;
+import rental.serializable.Quote;
+import rental.serializable.ReservationConstraints;
+import rental.serializable.ReservationException;
+
+public interface CarRentalCompanyRemote extends Remote {
 
 	Set<CarType> getAvailableCarTypes(Date start, Date end) throws RemoteException;
 	
@@ -16,5 +21,9 @@ public interface ICarRentalCompany extends Remote {
 	
 	List<Reservation> getReservationsByRenter(String clientName) throws RemoteException;
 	
+	CarType getCheapestCarType(Date start, Date end, String region) throws RemoteException;
+	
 	int getNumberOfReservationsForCarType(String carType) throws RemoteException;
+	
+	String getName() throws RemoteException;
 }

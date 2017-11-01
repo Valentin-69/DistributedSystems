@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import rental.remote.Reservation;
+import rental.serializable.CarType;
+
 public class Car {
 
     private int id;

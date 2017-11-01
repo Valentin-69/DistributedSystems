@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import rental.CarType;
+import rental.serializable.CarType;
 
 /**
  * This class forwards all commands starting with B to AbstractTestAgency and 

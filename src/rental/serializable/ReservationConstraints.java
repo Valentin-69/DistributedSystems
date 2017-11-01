@@ -1,4 +1,4 @@
-package rental;
+package rental.serializable;
 
 import java.io.Serializable;
 import java.util.Date;

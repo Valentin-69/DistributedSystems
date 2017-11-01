@@ -1,11 +1,12 @@
-package rental;
+package rental.serializable;
 
 import java.io.Serializable;
 import java.util.Date;
 
 public class Quote implements Serializable{
+	private static final long serialVersionUID = 1L;
 
-    private Date startDate;
+	private Date startDate;
     private Date endDate;
     private String carRenter;
     private String rentalCompany;
@@ -16,7 +17,7 @@ public class Quote implements Serializable{
 	 * CONSTRUCTOR *
 	 ***************/
 
-    Quote(String carRenter, Date start, Date end, String rentalCompany, String carType, double rentalPrice) {
+    public Quote(String carRenter, Date start, Date end, String rentalCompany, String carType, double rentalPrice) {
         this.carRenter = carRenter;
         this.startDate = start;
         this.endDate = end;
